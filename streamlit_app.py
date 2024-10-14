@@ -129,18 +129,13 @@ def handle_cluster_download_and_display(df):
                 visited.add(current_hex)
                 cluster.append(current_hex)
                 
-                # Check if current_hex is a valid H3 hexagon ID
-                if not h3.is_valid_hex(current_hex):
-                    print(f"Invalid hexagon ID: {current_hex}")
-                    continue
-                
                 # Get the neighbors of the current hex
                 try:
                     neighbors = h3.k_ring(current_hex, 1)
                 except Exception as e:
                     print(f"Error getting neighbors for {current_hex}: {e}")
                     continue
-                
+                    
                 # Add only neighbors that have FDI_COUNT > 0 to the cluster
                 for neighbor in neighbors:
                     if neighbor in hexes_with_fdi and neighbor not in visited:
