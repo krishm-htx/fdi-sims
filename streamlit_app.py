@@ -130,7 +130,7 @@ def handle_cluster_download_and_display(df):
                 for neighbor in neighbors:
                     if neighbor in hexes_with_fdi and neighbor not in visited:
                         to_explore.append(neighbor)
-    return cluster 
+        return cluster 
 
     clusters = []
     for hex_id in hexes_with_fdi:
