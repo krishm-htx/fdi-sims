@@ -11,11 +11,11 @@ import os
 import requests 
 
 # URLs to the data files in your GitHub repository
-MASTER_URL = "https://raw.githubusercontent.com/krishm-htx/fdi-simulations/main/MasterGridObj.xlsx"
-INSTANCES_URL = "https://raw.githubusercontent.com/krishm-htx/fdi-simulations/main/Instances_DATA.xlsx"
+MASTER_URL = "https://raw.githubusercontent.com/krishm-htx/fdi-sims/main/MasterGridObj.xlsx"
+INSTANCES_URL = "https://raw.githubusercontent.com/krishm-htx/fdi-sims/main/Instances_DATA.xlsx"
 
-Methodology_URL = "https://github.com/krishm-htx/fdi-simulations/raw/main/FDI-Sims-method.pdf"
-GIS_Steps_URL = "https://github.com/krishm-htx/fdi-simulations/raw/main/Excel_Import_to_ArcPro.pdf"
+Methodology_URL = "https://github.com/krishm-htx/fdi-sims/raw/main/FDI-Sims-method.pdf"
+GIS_Steps_URL = "https://github.com/krishm-htx/fdi-sims/raw/main/Excel_Import_to_ArcPro.pdf"
 
 # Directory to store saved simulations
 SAVE_DIR = "saved_simulations"
