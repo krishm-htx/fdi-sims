@@ -163,8 +163,8 @@ def main():
         W_s_range = np.arange(ws_start, ws_end + 1)  # Generate Ws range
 
         # Load data files
-        master_df = pd.read_excel(requests.get(MASTER_URL, stream=True).raw)
-        instances_df = pd.read_excel(requests.get(INSTANCES_URL, stream=True).raw)
+        master_df = pd.read_excel(io.BytesIO(requests.get(MASTER_URL).content)) 
+        instances_df = pd.read_excel(io.BytesIO(requests.get(INSTANCES_URL).content))
 
         # Run simulation
         updated_df = run_simulation(instances_df, W_s_range, threshold_fdi)
