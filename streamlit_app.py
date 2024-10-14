@@ -41,7 +41,7 @@ def calculate_fdi(W_s, I_s, I_p):
     return (W_s * I_s + W_p * I_p) / 100
 
 # Function to run FDI simulation
-def run_simulation(df, W_s_range, threshold): # Modified to accept W_s_range as argument
+def run_simulation(df, W_s_range, threshold): 
     df['FDI_Count'] = 0
     histogram_data = {}
 
@@ -79,7 +79,8 @@ def merge_with_master(fdi_df, master_df):
     merged_df['Ip'] = merged_df['Ip'].fillna(0)
     return merged_df
 
-# Function to plot hexagons on map (Optimized) def hexagons_to_geodataframe(hex_ids):
+# Function to plot hexagons on map 
+def hexagons_to_geodataframe(hex_ids):
     hex_polygons = []
     for hex_id in hex_ids:
         hex_boundary = h3.h3_to_geo_boundary(hex_id, geo_json=True)
@@ -102,7 +103,7 @@ def plot_clusters_on_map(clustered_hexagons):
     ctx.add_basemap(ax, source=ctx.providers.OpenStreetMap.Mapnik)
 
     # Set title and show plot
-    plt.title("Clustered H3 Hexagons Over Houston, TX")
+    plt.title("Clustered H3 Hexagons Over Houston, TX ")
     st.pyplot(plt)
 
 # Function to handle file download for FDI results
@@ -169,7 +170,6 @@ def handle_cluster_download_and_display(df):
 
 # Main Streamlit app function
 def main():
-    io = __import__('io') # Import io within the main function's scope 
     st.title("FDI Simulation App")
     st.write("Welcome to the FDI Simulation App!")
 
@@ -183,8 +183,8 @@ def main():
 
         # Load data files only after the "Run Simulation" button is clicked
         if st.button('Run FDI Simulation'):
-            master_df = pd.read_excel(io.BytesIO(requests.get(MASTER_URL).content))
-            instances_df = pd.read_excel(io.BytesIO(requests.get(INSTANCES_URL).content))
+            master_df = pd.read_excel(requests.get(MASTER_URL).content)
+            instances_df = pd.read_excel(requests.get(INSTANCES_URL).content)
 
             # Run simulation and the rest of the operations
             updated_df = run_simulation(instances_df, W_s_range, threshold_fdi)
