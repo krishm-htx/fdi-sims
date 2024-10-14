@@ -119,18 +119,18 @@ def handle_cluster_download_and_display(df):
     visited = set()
 
     def find_cluster(hex_id):
-        cluster = []
-        to_explore = [hex_id]
-        while to_explore:
-            current_hex = to_explore.pop()
-            if current_hex not in visited:
-                visited.add(current_hex)
-                cluster.append(current_hex)
-                neighbors = h3.k_ring(current_hex, 1)
-                for neighbor in neighbors:
-                    if neighbor in hexes_with_fdi and neighbor not in visited:
-                        to_explore.append(neighbor)
-        return cluster
+    cluster = []
+    to_explore = [hex_id]
+    while to_explore:
+        current_hex = to_explore.pop()
+        if current_hex not in visited:
+            visited.add(current_hex)
+            cluster.append(current_hex)
+            neighbors = h3.k_ring_distances(current_hex, 1)[0] # Corrected line
+            for neighbor in neighbors:
+                if neighbor in hexes_with_fdi and neighbor not in visited:
+                    to_explore.append(neighbor)
+    return cluster 
 
     clusters = []
     for hex_id in hexes_with_fdi:
