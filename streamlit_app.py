@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import io
 from io import BytesIO
 import geopandas as gpd
 from shapely.geometry import Polygon
@@ -23,15 +22,18 @@ SAVE_DIR = "saved_simulations"
 if not os.path.exists(SAVE_DIR):
     os.makedirs(SAVE_DIR)
 
-# Function to dynamically adjust Ws and Wp sliders (Ws + Wp = 100)
+# Function to dynamically adjust Ws and Wp sliders 
 def dynamic_sliders():
-    ws_start = st.slider('Set Ws Start:', min_value=0, max_value=100, value=50, step=1)
-    ws_end = st.slider('Set Ws End:', min_value=ws_start, max_value=100, value=100, step=1)
-    wp_start = 100 - ws_end
-    wp_end = 100 - ws_start
-    st.write(f"Automatically adjusted Wp range: ({wp_start}, {wp_end})")  # Display Wp range
+    ws_range = st.slider(
+        'Set Ws Range:', 
+        min_value=0, max_value=100, 
+        value=(50, 100)  # Default range (50 to 100)
+    )
+    wp_start = 100 - ws_range[1]
+    wp_end = 100 - ws_range[0]
+    st.write(f"Automatically adjusted Wp range: ({wp_start}, {wp_end})")
     threshold_fdi = st.slider('Set FDI Threshold:', min_value=1.0, max_value=5.0, value=4.8, step=0.1)
-    return ws_start, ws_end, threshold_fdi
+    return ws_range, threshold_fdi
 
 # Function to calculate FDI
 def calculate_fdi(W_s, I_s, I_p):
@@ -160,21 +162,21 @@ def main():
 
     with tab1:
         st.write("### Run FDI Simulations")
-        ws_start, ws_end, threshold_fdi = dynamic_sliders()
-        W_s_range = np.arange(ws_start, ws_end + 1)  # Generate Ws range
+        ws_range, threshold_fdi = dynamic_sliders()
+        W_s_range = np.arange(ws_range[0], ws_range[1] + 1) 
 
-        # Load data files
-        master_df = pd.read_excel(io.BytesIO(requests.get(MASTER_URL).content)) 
-        instances_df = pd.read_excel(io.BytesIO(requests.get(INSTANCES_URL).content))
+        # Load data files only after the "Run Simulation" button is clicked
+        if st.button('Run FDI Simulation'):
+            master_df = pd.read_excel(io.BytesIO(requests.get(MASTER_URL).content))
+            instances_df = pd.read_excel(io.BytesIO(requests.get(INSTANCES_URL).content))
 
-        # Run simulation
-        updated_df = run_simulation(instances_df, W_s_range, threshold_fdi)
-        merged_df = merge_with_master(updated_df, master_df)
+            # Run simulation and the rest of the operations
+            updated_df = run_simulation(instances_df, W_s_range, threshold_fdi)
+            merged_df = merge_with_master(updated_df, master_df)
 
-        # Display download buttons
-        handle_file_download(merged_df)
-        handle_cluster_download_and_display(updated_df)
-
+            handle_file_download(merged_df)
+            handle_cluster_download_and_display(updated_df)
+            
     with tab2:
         st.write("### Saved Simulations")
         # TO DO: Implement saved simulations functionality
