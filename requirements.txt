@@ -6,4 +6,3 @@ geopandas
 h3
 contextily
 requests
-io
