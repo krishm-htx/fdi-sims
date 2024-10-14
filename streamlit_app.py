@@ -129,7 +129,7 @@ def handle_cluster_download_and_display(df):
                 cluster.append(current_hex)
                 
                 # Check if current_hex is a valid H3 hexagon ID
-                if not h3.h3_is_valid(current_hex):
+                if not h3.is_valid_hex(current_hex):
                     print(f"Invalid hexagon ID: {current_hex}")
                     continue
                 
