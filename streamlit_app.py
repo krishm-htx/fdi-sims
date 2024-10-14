@@ -128,15 +128,15 @@ def handle_cluster_download_and_display(df):
             if current_hex not in visited:
                 visited.add(current_hex)
                 cluster.append(current_hex)
-                
+    
                 # Get the neighbors of the current hex
                 try:
-                    neighbors = h3.k_ring(current_hex, 1)
+                    neighbors = h3.k_ring(current_hex, 1)  # Finding neighbors at distance 1
                 except Exception as e:
                     print(f"Error getting neighbors for {current_hex}: {e}")
                     continue
-                    
-                # Add only neighbors that have FDI_COUNT > 0 to the cluster
+    
+                # Add only neighbors that have FDI_Count > 0 to the cluster
                 for neighbor in neighbors:
                     if neighbor in hexes_with_fdi and neighbor not in visited:
                         to_explore.append(neighbor)
