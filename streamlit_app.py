@@ -154,6 +154,7 @@ def handle_cluster_download_and_display(df):
 
 # Main Streamlit app function
 def main():
+    io = __import__('io') # Import io within the main function's scope 
     st.title("FDI Simulation App")
     st.write("Welcome to the FDI Simulation App!")
 
