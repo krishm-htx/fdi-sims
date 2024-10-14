@@ -1,1 +1,8 @@
 streamlit
+pandas
+numpy
+matplotlib
+geopandas
+h3
+contextily
+requests
